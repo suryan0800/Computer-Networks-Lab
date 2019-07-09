@@ -1,4 +1,3 @@
-package networks;
 
 import java.util.Scanner;
 public class Msg{
