@@ -1,0 +1,96 @@
+
+import java.util.Scanner;
+
+public class DistinctVectorRouting {
+	public static void main(String args[])
+	{
+		int node;
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Enter No of Nodes : ");
+		node = scan.nextInt();
+		int dist[][] = new int[node][node];
+
+		for(int i = 0; i < node;i++ )
+		{
+			for(int j = 0; j < node; j++)
+			{
+				if(i == j)
+				{
+					dist[i][j] = 0;
+				
+				}
+				else
+				{
+					dist[i][j] = Integer.MAX_VALUE;
+				
+				}
+			}
+		}
+		System.out.println("Enter no of Edges : ");
+		int edge = scan.nextInt();
+		
+		for(int i = 0 ; i < edge; i++)
+		{
+			System.out.println("Enter Starting Node No : ");
+			int start = scan.nextInt();
+			System.out.println("Enter End Node No : ");
+			int end = scan.nextInt();
+			System.out.println("Enter Edge Weight : ");
+			dist[start][end] = scan.nextInt();
+			dist[end][start] = dist[start][end];
+			
+			
+		}
+		int source = 0;
+	
+		for(int l = 0; l < node ; l++)
+		{
+	
+		for(int i = 0; i < node; i++)
+		  {
+			   if(dist[source][i] != Integer.MAX_VALUE && dist[source][i] != 0)
+			   {
+				   int d1 = dist[source][i];
+				    for(int j = 0; j < node; j++)
+				    {
+				    	if(i != j && j != source)
+				    	{
+				    		int d2 = dist[i][j];
+				    		
+				    		if(d2 != Integer.MAX_VALUE && d1 + d2 < dist[source][j])
+				    		{
+				    			System.out.println("d1  " + d1 + " d2 " + d2 + " dist " + dist[source][i]);
+				    			dist[source][j] = dist[j][source] =  d1 + d2;
+				    			
+				    		}
+				    	}
+				    }
+			   }
+		  }
+		source++;
+		if(source == node)
+		{
+			source = 0;
+		}
+		}
+		
+		System.out.print("    ");
+		for(int i = 0; i < node; i++)
+		{
+			System.out.print(i + "   ");
+		}
+		System.out.println();
+		for(int i = 0; i < node; i++)
+		{
+			System.out.print(i + "   ");
+			for(int j = 0 ; j < node; j++)
+			{
+		
+					System.out.print( dist[i][j] + "   ");
+				
+			
+		}
+			System.out.println();
+		}
+	}
+}
