@@ -1,12 +1,19 @@
-package networks;
 
 import java.rmi.*;
+import java.util.Scanner;
 
 public class RMIClient {
 	public static void main(String args[]) throws Exception
 	{
-		Addition a = (Addition) Naming.lookup("rmi://localhost:1999/Pravin");
+		Addition aa = (Addition) Naming.lookup("rmi://localhost:1999/Surya");
+
+        Scanner scan = new Scanner(System.in);
+		System.out.println("Enter Two Values to Add : \n");
+		int a,b;
+		a = scan.nextInt();
+		b = scan.nextInt();
+		System.out.println("Added Value : " + aa.add(a, b));
 		
-		System.out.println("Added Value : " + a.add(10, 50));
+		
 	}
 }

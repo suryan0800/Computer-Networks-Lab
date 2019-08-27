@@ -1,4 +1,3 @@
-package networks;
 
 import java.rmi.*;
 import java.rmi.server.*;

@@ -1,3 +1,4 @@
+package networks;
 
 import java.util.Scanner;
 
@@ -9,7 +10,7 @@ public class DistinctVectorRouting {
 		System.out.println("Enter No of Nodes : ");
 		node = scan.nextInt();
 		int dist[][] = new int[node][node];
-
+		int via [][] = new int [node][node];
 		for(int i = 0; i < node;i++ )
 		{
 			for(int j = 0; j < node; j++)
@@ -17,11 +18,13 @@ public class DistinctVectorRouting {
 				if(i == j)
 				{
 					dist[i][j] = 0;
+					via[i][j] = i;
 				
 				}
 				else
 				{
 					dist[i][j] = Integer.MAX_VALUE;
+					via[i][j] = 100;
 				
 				}
 			}
@@ -38,12 +41,12 @@ public class DistinctVectorRouting {
 			System.out.println("Enter Edge Weight : ");
 			dist[start][end] = scan.nextInt();
 			dist[end][start] = dist[start][end];
-			
+			via[start][end] = start;
+			via[end][start] = end;
 			
 		}
-		int source = 0;
 	
-		for(int l = 0; l < node ; l++)
+		for(int source = 0; source < node ; source++)
 		{
 	
 		for(int i = 0; i < node; i++)
@@ -59,25 +62,35 @@ public class DistinctVectorRouting {
 				    		
 				    		if(d2 != Integer.MAX_VALUE && d1 + d2 < dist[source][j])
 				    		{
-				    			System.out.println("d1  " + d1 + " d2 " + d2 + " dist " + dist[source][i]);
+				    		//	System.out.println("d1  " + d1 + " d2 " + d2 + " dist " + dist[source][i]);
 				    			dist[source][j] = dist[j][source] =  d1 + d2;
-				    			
+				    			int s = source;
+				    			int ii = i;
+				    			while(s != via[s][ii])
+				    			{
+				    				ii = via[s][ii];
+				    			}
+				    			via[source][j] = ii;
+				    			 s = j;
+				    			 ii = i;
+				    			 while(s != via[s][ii])
+				    			{
+				    				ii = via[s][ii];
+				    			}
+				    			via[j][source] = ii;
 				    		}
 				    	}
 				    }
 			   }
 		  }
-		source++;
-		if(source == node)
-		{
-			source = 0;
-		}
+		
+	
 		}
 		
 		System.out.print("    ");
 		for(int i = 0; i < node; i++)
 		{
-			System.out.print(i + "   ");
+			System.out.print(i + " , " + "via " +  "\t");
 		}
 		System.out.println();
 		for(int i = 0; i < node; i++)
@@ -86,10 +99,10 @@ public class DistinctVectorRouting {
 			for(int j = 0 ; j < node; j++)
 			{
 		
-					System.out.print( dist[i][j] + "   ");
+					System.out.print( dist[i][j] + ", via " + via[i][j] + "\t");
 				
 			
-		}
+			}
 			System.out.println();
 		}
 	}
